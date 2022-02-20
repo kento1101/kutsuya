@@ -28,7 +28,6 @@ if(!pdList){
 　　　　　　　　});
 　　　　      
 
-
 $(".fs-c-variationCart__cartButton--outOfStock").each(function(index){
 $(this).parents("li").addClass("outOfStock")
     });  
