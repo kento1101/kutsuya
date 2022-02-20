@@ -1,204 +1,190 @@
 
 
 $(document).ready(function(){
-　　　　　　　　　　　let pdList = Cookies.get('products_list');
-if(!pdList){
-　$('.trial-order-count').text(0);   
+
+    //ヘッダ−お試し履きカート内商品数の表示
+
+    let pdList = Cookies.get('products_list');
+    if(!pdList){
+　      $('.trial-order-count').text(0);   
         $('.trial-order-count').show();
-}else{
-    let test01 = JSON.parse(pdList);
+    }else{
+        let test01 = JSON.parse(pdList);
         let trialOrderList = test01.length;        
-          $('.trial-order-count').text(trialOrderList);    //お試し履きカート内商品数の表示
+        $('.trial-order-count').text(trialOrderList);    
         $('.trial-order-count').show();
-}
+    }
 
 
 
-　var k = 0;
-　　　　　　　　$('.fs-c-variationCart__variationName__name').each(function(){
-    　　　　　$(this).addClass('size'+k);
-    　　　　　k++;
-　　　　　　　　});
 
-　　var sk = 0;
-　　　　　　　　$('.variationCart__variationName__stock').each(function(){
- 　　　
-    　　　　　$(this).addClass('stock'+sk)                          //在庫確認用クラスづけ
-    　　　　　sk++;
-　　　　　　　　});
+     //サイズ識別用クラスづけ
+　  var k = 0;
+    $('.fs-c-variationCart__variationName__name').each(function(){
+        $(this).addClass('size'+k);
+        k++;
+    });
+
+
+     //在庫確認用クラスづけ
+    var sk = 0;
+        $('.variationCart__variationName__stock').each(function(){　
+            $(this).addClass('stock'+sk)                          
+            sk++;           
+        });
 　　　　      
 
-$(".fs-c-variationCart__cartButton--outOfStock").each(function(index){
-$(this).parents("li").addClass("outOfStock")
+    $(".fs-c-variationCart__cartButton--outOfStock").each(function(index){
+        $(this).parents("li").addClass("outOfStock")
     });  
 
 
 
-    
-
-
-        let ww = jQuery('body').width();
-　　　　　　　
+    let ww = jQuery('body').width();　
 　　　　　　　//$('.fs-c-productActionButton').append('<div><a id="js-open" class="js-modal-open float-right" href="">お試し履き</a></div>');
-    　　　　　　　$('.fs-c-variationList__item__cart li').append('<div><a class="js-modal-open float-right" href="">お試し履き</a></div>');
-$(".outOfStock").find('.js-modal-open').css('background-color','#cccccc');      //品切れ商品の色変え
-$(".outOfStock").find('.js-modal-open').css('pointer-events','none');　　　　　　　　　　　　　　　　　　　　　　　//品切れ商品クリック不可に
+    $('.fs-c-variationList__item__cart li').append('<div><a class="js-modal-open float-right" href="">お試し履き</a></div>');
+    $(".outOfStock").find('.js-modal-open').css('background-color','#cccccc');      //品切れ商品の色変え
+    $(".outOfStock").find('.js-modal-open').css('pointer-events','none');　　　　　　  //品切れ商品クリック不可に
 
 
 
-　　　　　　　$('.fs-c-productNameHeading').append('<div><a class="btn btn-outline-secondary trial-order-index float-right" href="">お試し履きカート</a></div>');
-　　　　　　　　　　　let productsList = Cookies.get('products_list');
+　　　$('.fs-c-productNameHeading').append('<div><a class="btn btn-outline-secondary trial-order-index float-right" href="">お試し履きカート</a></div>');
 
-　let saleCheck= $(".rate-label").find('span').text();
-        if(saleCheck.length > 0){                            //値引きラベルがついた商品はお試し履きボタン押せなくする
-　　　　　　　               $('.js-modal-open').each(function(){
-    　　　　　　　　　　           　$(this).css('pointer-events','none');　　　　　　
-    　　　　　　　　　　　            $(this).css('background-color','#cccccc');　　　　　　
-    　　　　        　　　　　　　　});
+        let productsList = Cookies.get('products_list');
+
+
+         //値引きラベルがついた商品はお試し履きボタン押せなくする
+　      let saleCheck= $(".rate-label").find('span').text();
+        if(saleCheck.length > 0){                           
+            $('.js-modal-open').each(function(){
+                $(this).css('pointer-events','none');　　　　　　
+                $(this).css('background-color','#cccccc');　　　　　　
+            });
         }
 
-     let productPrice = $(".fs-c-price__value").text();               //15000円以上ならだめ
+    //15000円以上ならだめ
+    let productPrice = $(".fs-c-price__value").text();              
     let result =  Number( productPrice.replace(/,/, '') );
         if (result < 15000){
                 $('.js-modal-open').each(function(){
-    　　　　　　　　　　           　$(this).css('pointer-events','none');　　　　　　
-    　　　　　　　　　　　           $(this).css('background-color','#cccccc');　　　　　　
-    　　　　           });
-            }
-
-let productSizeLive = $('[name=variationSelect]').val().length;      //サイズ未選択ならだめ
-console.log(productSizeLive);
-        if ( productSizeLive < 5){
-                $('.js-modal-open').each(function(){
-    　　　　　　　　　           　$(this).css('pointer-events','none');　　　　　　
-    　　　　　　　　　　　           $(this).css('background-color','#cccccc');　　　　　　
-    　　　　           });
-            }　
-
-
-            console.log("Hey");
-            if(!productsList){
-            　$('.trial-order-count').text(0);   
-                        $('.trial-order-count').show();
-            }else{
-            let test01 = JSON.parse(productsList);
-                        let trialOrderList = test01.length;        
-                        $('.trial-order-count').text(trialOrderList);    //お試し履きカート内商品数の表示
-                        $('.trial-order-count').show();
-            
-            }
-            　　　　　   
+                    $(this).css('pointer-events','none');　　　　　　
+                    $(this).css('background-color','#cccccc');　　　　　　
+                });
+        }
     
+     //サイズ未選択ならだめ
+    let productSizeLive = $('[name=variationSelect]').val().length;     
+    if ( productSizeLive < 5){
+        $('.js-modal-open').each(function(){
+            $(this).css('pointer-events','none');　　　　　　
+            $(this).css('background-color','#cccccc');　　　　　　
+        });
+    }　
+
+     //お試し履きカート内商品数の表示
+    if(!productsList){
+        $('.trial-order-count').text(0);   
+        $('.trial-order-count').show();
+    }else{
+        let test01 = JSON.parse(productsList);
+        let trialOrderList = test01.length;        
+        $('.trial-order-count').text(trialOrderList);   
+        $('.trial-order-count').show();    
+    }
+　　　　　   
+
     var i = 1;
-　　　　　　　$('.js-modal-open').each(function(){
-   　　　　　 $(this).addClass('style'+i);
-    　　　　　i++;
-　　　　　　　　});
-
-
-        
-
-
+        $('.js-modal-open').each(function(){
+            $(this).addClass('style'+i);
+            i++;
+        });
 });
+
+
+
 
 
 $(function() {
 
 //商品削除用ボタン
-    　     $( document ).on( "click", ".trialDelete", function (){
-                let btnIndex = $('.trialDelete').index(this);  
-                　let itemList = Cookies.getJSON('products_list');    
-                itemList.splice(btnIndex, 1); 
-                Cookies.set('products_list',itemList);  
-              $('.products-index').empty();                        //商品リストを空にする
+    $( document ).on( "click", ".trialDelete", function (){
+        let btnIndex = $('.trialDelete').index(this);  
+        let itemList = Cookies.getJSON('products_list');    
+        itemList.splice(btnIndex, 1); 
+        Cookies.set('products_list',itemList);  
+        $('.products-index').empty();               //商品リストを一度空にする         
 
-
-　       let productsList = Cookies.get('products_list');
+        let productsList = Cookies.get('products_list');
         if(!productsList == ""){　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　//Cookieの中にアイテムがあるのか
             let test01 = JSON.parse(productsList);
             if($('.product-content').length == 0){   
-    for(var x=0; x<test01.length; x++){                       
-                            $(".products-index").append('<div class="d-flex justify-content-around mt-2 product-content" style="border-bottom:solid 1px #ccc"><div class="rc-image"><img alt="商品画像" width="140px" height="105px"></div><div class="product-info" style="line-height: 1;"><p class="font-weight-bold rc-name"></p><div class="d-flex"><p>¥<span class="product-price"></span></p></div><p class="rc-size-wrap">サイズ: <span class="rc-size-name"></span></p><button class="btn trialDelete" href="">削除する</button></div><div class="mt-5 product-select text-center"><a class="text-danger now-buy" style="border:solid 1px #DB5A69;padding:10px 30px 10px 30px;margin:0 auto">いますぐ購入</a></div></div>');                                                               
-                 }       //for文の閉じタグ 
+                for(var x=0; x<test01.length; x++){                       
+                    $(".products-index").append('<div class="d-flex justify-content-around mt-2 product-content" style="border-bottom:solid 1px #ccc"><div class="rc-image"><img alt="商品画像" width="140px" height="105px"></div><div class="product-info" style="line-height: 1;"><p class="font-weight-bold rc-name"></p><div class="d-flex"><p>¥<span class="product-price"></span></p></div><p class="rc-size-wrap">サイズ: <span class="rc-size-name"></span></p><button class="btn trialDelete" href="">削除する</button></div><div class="mt-5 product-select text-center"><a class="text-danger now-buy" style="border:solid 1px #DB5A69;padding:10px 30px 10px 30px;margin:0 auto">いますぐ購入</a></div></div>');                                                               
+                }       //for文の閉じタグ 
 
+                //「いますぐ購入」ボタンの追加
+                let indexA = 0;
+                $('.now-buy').each(function(){
+                    let nowName = test01[indexA].name;
+                    let url = 'https://rabostar.com/p/search?keyword=' + nowName;
+                    let newUrl =url.replace(/ /g, '+');
+                    let sinUrl ="location.href='"+newUrl+"’"
+                    let Urlww = encodeURI(newUrl);
+                    $(this).attr('href',Urlww);
+                    indexA++;
+                });
 
-
-                    let indexA = 0;
-    　　　　　　　             $('.now-buy').each(function(){
-                            let nowName = test01[indexA].name;
-                            let url = 'https://rabostar.com/p/search?keyword=' + nowName;
-    　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　let newUrl =　　　url.replace(/ /g, '+');
-                        let sinUrl ="location.href='"+newUrl+"’";
-    　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　let Urlww = encodeURI(newUrl);
-
-
-                            $(this).attr('href',Urlww);
-        　　　              　indexA++;
-    　　　　　         　　　    });
-
-
-
-                        let v = 0;
-    　　　　　　　                  $('.product-price').each(function(){
-                        
-       　　　　　                   $(this).html(test01[v].price);
-        　　　　                   　v++;
-    　　　　　　　　                  });
-
-    
+                let v = 0;
+                $('.product-price').each(function(){
+                    $(this).html(test01[v].price);
+                    v++;
+                });
 
                 let w = 0;
-　　　　　　　             $('.rc-name').each(function(){
-   　　　　             　 $(this).html(test01[w].name);
-    　　　              　　w++;
-　　　　　         　　　    });
+                $('.rc-name').each(function(){
+                    $(this).html(test01[w].name);
+                    w++;
+                });
 
-                    let y = 0;
-    　　　　　　　             $('.rc-size-name').each(function(){
-       　　　　　                $(this).html(test01[y].size_name);
-        　　　                　　y++;
-    　　　        　　　　     　});
+                let y = 0;
+                $('.rc-size-name').each(function(){
+                    $(this).html(test01[y].size_name);
+                    y++;
+                });
 
-                    let z = 0;
-    　　　　　                  　　$('.rc-image').each(function(){
-       　　              　　　 $(this).children('img').attr('src',test01[z].image);
-        　　               　　　z++;
-    　　　　　　             　　});
+                let z = 0;
+                $('.rc-image').each(function(){
+                    $(this).children('img').attr('src',test01[z].image);
+                    z++;
+                });
             }
-    }
+        }
         
-            if($('.product-content').length == 0){   
-        $('.item-nothing').show();
-    $('.shopping_cont_btn'+'.modal01-btn').css({'width':'310px','margin-left':'30px'});
-        $('.js-modal02-open').hide();
-    $('.form-content-test').hide();
+        //商品が一つも無いとき
+        if($('.product-content').length == 0){   
+            $('.item-nothing').show();
+            $('.shopping_cont_btn'+'.modal01-btn').css({'width':'310px','margin-left':'30px'});
+            $('.js-modal02-open').hide();
+            $('.form-content-test').hide();
+        }else{
+            let ww = jQuery('body').width();
+            if(ww >= 750){
+                $('.shopping_cont_btn'+'.modal01-btn').css({'width':'100%','margin-left':'0'});
+            }
+        }
 
-            }else{
-let ww = jQuery('body').width();
-                            if(ww >= 750){
-$('.shopping_cont_btn'+'.modal01-btn').css({'width':'100%','margin-left':'0'});
-}
-}
-
-
-
-
-console.log("Hey");//お試し履きカート内商品数リロード
-    if(!productsList){
-    　$('.trial-order-count').text(0);   
+        //お試し履きカート内商品数リロード
+        if(!productsList){
+            $('.trial-order-count').text(0);   
             $('.trial-order-count').show();
-    }else{
-    let test01 = JSON.parse(productsList);
+        }else{
+            let test01 = JSON.parse(productsList);
             let trialOrderList = test01.length;        
             $('.trial-order-count').text(trialOrderList);    //お試し履きカート内商品数の表示
             $('.trial-order-count').show();
-    
-    }
-
-
-
-
-            });
+        }
+    });
+//商品削除ボタン　終了
 
 
 $(document).on('click', '.header-trial-order', function(){
